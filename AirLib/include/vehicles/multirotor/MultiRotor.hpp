@@ -109,10 +109,12 @@ public:
                 getController()->getVertexControlSignal(rotor_index));
         }
 
-		for (int j = 0; j < cam_vel.size(); j++)
+		Vector3r cam_vel = getCameraVelocity(); // read controller signal 
+		for (int j = 0; j < 3; j++)
 		{
-			cam_vel[j] = getController()->getCamControlSignal(j);
+			 cam_vel[j] = cam_vel[j] + getController()->getCamControlSignal(j);
 		}
+		setCameraVelocity(cam_vel);
     }
 
     //sensor getter

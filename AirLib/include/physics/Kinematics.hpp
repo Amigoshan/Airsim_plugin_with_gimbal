@@ -104,6 +104,10 @@ public:
 		return current_.cam_velocity;
 	}
 
+	void setCameraVelocity(const Vector3r camvel)
+	{
+		current_.cam_velocity = camvel;
+	}
 
     const State& getState() const
     {

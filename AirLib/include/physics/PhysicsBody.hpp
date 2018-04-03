@@ -56,12 +56,6 @@ public: //interface
         collision_info_ = collision_info;
     }
 
-	// for gimbal control -- amigo
-	float getCamVel(int axis_ind)
-	{
-		return cam_vel[axis_ind];
-	}
-
 public: //methods
     //constructors
     PhysicsBody()
@@ -182,6 +176,16 @@ public: //methods
 		return kinematics_.getCameraAngle();
 	}
 
+	const Vector3r getCameraVelocity()
+	{
+		return kinematics_.getCameraVelocity();
+	}
+
+	void setCameraVelocity(Vector3r cam_vel) // for read control signal from controller -- amigo
+	{
+		return kinematics_.setCameraVelocity(cam_vel);
+	}
+
     const Kinematics::State& getKinematics() const
     {
         return kinematics_.getState();
@@ -251,9 +255,6 @@ private:
     CollisionResponseInfo collision_response_info_;
 
     Environment* environment_ = nullptr;
-
-protected:
-	vector<float> cam_vel = {0.0, 0.0, 0.0}; // for gimbal control -- amigo
 
 };
 

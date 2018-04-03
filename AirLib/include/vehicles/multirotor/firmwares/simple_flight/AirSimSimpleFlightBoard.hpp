@@ -117,7 +117,7 @@ public:
         input_channels_.assign(params_->rc.channel_count, 0);
         is_connected_ = false;
 
-		cam_output_.assign(axis_num, 0);
+		cam_output_.assign(axis_num, 0.0);
     }
 
     virtual void update() override

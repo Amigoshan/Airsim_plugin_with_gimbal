@@ -34,7 +34,7 @@ public:
         goal_timestamp_ = 0;
         updateGoalFromRc();
 
-		cam_goal_ = Axis4r(0, 0, 0, 0); // initialization -- amigo
+		cam_goal_ = Axis4r(0.0, 0.0, 0.0, 0.0); // initialization -- amigo
     }
 
     virtual void update() override

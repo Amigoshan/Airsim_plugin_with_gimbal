@@ -84,9 +84,17 @@ private:
 		float vel1 = current.cam_velocity[0];
 		float vel2 = current.cam_velocity[1];
 		float vel3 = current.cam_velocity[2];
-		next.cam_angle[0] = current.cam_angle[0] + body.getCamVel(0);
-		next.cam_angle[1] = current.cam_angle[1] + body.getCamVel(1);
-		next.cam_angle[2] = current.cam_angle[2] + body.getCamVel(2);
+		next.cam_angle[0] = current.cam_angle[0] + vel1 * dt;
+		next.cam_angle[1] = current.cam_angle[1] + vel2 * dt;
+		next.cam_angle[2] = current.cam_angle[2] + vel3 * dt;
+		next.cam_velocity[0] = vel1;
+		next.cam_velocity[1] = vel2;
+		next.cam_velocity[2] = vel3;
+		/*Utils::log(Utils::stringf("cameraRotate at speed %f %f %f, %f", vel1, vel2, vel3, dt));
+		FString outlog1 = FString::Printf(TEXT("current %f %f %f"), vel1, vel2, vel3);
+		if(vel1>0.000001||vel1<-0.000001)
+			GEngine->AddOnScreenDebugMessage(-1, 1.0, FColor::Red, *outlog1);*/
+		
 
         //if there is collision, see if we need collision response
         const CollisionInfo collision_info = body.getCollisionInfo();
