@@ -17,6 +17,7 @@
 #include "FlyingPawn.h" 
 #include "AirBlueprintLib.h"
 #include <exception>
+#include <math.h>
 
 using namespace msr::airlib;
 
@@ -237,11 +238,22 @@ void MultiRotorConnector::updateRendering(float dt)
     }
 
 	Vector3r cameraAngle; // for gimbal control -- amigo
-	Quaternionr targetAngle;
 	cameraAngle = vehicle_.getCameraAngle();
-	targetAngle = AngleAxisr(cameraAngle[0], Vector3r::UnitX())
-		* AngleAxisr(cameraAngle[1], Vector3r::UnitY())
-		* AngleAxisr(cameraAngle[2], Vector3r::UnitZ());
+	
+	float t0 = cos(cameraAngle[2] * 0.5);
+	float t1 = sin(cameraAngle[2] * 0.5);
+	float t2 = cos(cameraAngle[0] * 0.5);
+	float t3 = sin(cameraAngle[0] * 0.5);
+	float t4 = cos(cameraAngle[1] * 0.5);
+	float t5 = sin(cameraAngle[1] * 0.5);
+
+	float w = t0*t2*t4 + t1*t3*t5;
+	float x = t0*t3*t4 - t1*t2*t5;
+	float y = t0*t2*t5 + t1*t3*t4;
+	float z = t1*t2*t4 - t0*t3*t5;
+
+	Quaternionr targetAngle(w,x,y,z);
+
 	vehicle_pawn_wrapper_->setCameraOrientation(0, targetAngle); // only set the camera 0
 
     //update rotor animations
